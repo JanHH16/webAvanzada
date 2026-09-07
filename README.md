@@ -33,3 +33,11 @@ El orden secuencial de las etapas que ejecuta el job es:
 
 **Justificación:**
 `npm ci` se debe ejecutar antes de las pruebas porque el runner se inicializa como un entorno completamente limpio y vacío. Si intentáramos ejecutar las pruebas (`npm test`) antes de este paso, el comando fallaría de inmediato, ya que el sistema no tendría instalados los paquetes ni las dependencias necesarias para compilar y ejecutar el framework.
+
+### Pregunta 8: Después del push, indique qué etapa del pipeline falla y qué ocurre con las etapas siguientes.
+
+La etapa que falla es la de **"Ejecutar pruebas"** (`npm test`), ya que la aserción del test de Angular busca el texto incorrecto que configuramos a propósito. Como las acciones dentro de un job en GitHub Actions se ejecutan de manera secuencial, cuando un paso falla arrojando un error, el runner detiene el workflow de inmediato por seguridad. Esto significa que las etapas siguientes (en este caso, **"Construir Angular"**) se omiten y no llegan a ejecutarse.
+
+### Pregunta 9: ¿Debería integrarse este Pull Request a main mientras el pipeline está fallando? Justifique.
+
+No, no se debe integrar. El pipeline actúa como un **Quality Gate** (filtro de calidad automatizado) para asegurar que el software cumpla con los estándares mínimos antes de mezclarse. Si forzamos la integración de un Pull Request mientras el pipeline está fallando, subiríamos pruebas rotas o código defectuoso directamente a `main`, lo que rompería la rama principal para todo el equipo y violaría el acuerdo de mantenerla siempre ejecutable y libre de fallos.
