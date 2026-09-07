@@ -1,1 +1,8 @@
-# webAvanzada
+### Pregunta 1: ¿Por qué no se recomienda desarrollar directamente sobre `main` en este laboratorio?
+
+No se recomienda trabajar directamente sobre la rama `main` por varios motivos prácticos de calidad, orden y control del flujo de trabajo:
+
+1. **Mantener la rama principal estable:** La rama `main` debe estar siempre en un estado ejecutable y libre de fallos. Desarrollar directamente en ella expone al proyecto a que subamos código incompleto o con errores que rompan la aplicación para el resto del equipo de forma inmediata.
+2. **Validar los cambios con el pipeline de CI:** El flujo automatizado de integración continua (`ci.yml`) está configurado para ejecutarse con eventos de Pull Request hacia `main`. Al trabajar de forma aislada en la rama obligatoria `devops/ci-cd`, GitHub Actions puede levantar un entorno limpio, instalar dependencias con `npm ci`, correr las pruebas unitarias y verificar la compilación antes de mezclar los cambios.
+3. **Control mediante Quality Gates:** Si subimos commits directamente a `main`, evadimos los filtros automáticos de calidad. Al usar un Pull Request, el pipeline actúa como un muro de contención: si una prueba falla o el proyecto no compila, el merge se bloquea, impidiendo que el código defectuoso contamine la rama estable.
+4. **Trazabilidad e historial de cambios:** Integrar mediante ramas y Pull Requests obliga a dejar un registro claro de qué se modificó, qué pruebas se hicieron y por qué se subió el cambio, lo que mantiene el historial del repositorio ordenado y facilita la colaboración.
