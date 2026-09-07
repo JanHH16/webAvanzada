@@ -50,3 +50,16 @@ No, no se debe integrar. El pipeline actúa como un **Quality Gate** (filtro de 
 * **`DB_PASSWORD`**: secreto/no versionable
 * **`API_TOKEN`**: secreto/no versionable
 * **`terraform.tfstate`**: secreto/no versionable
+
+### Pregunta 11: ¿Por qué una contraseña o token no debe escribirse directamente dentro de `ci.yml`, `cd.yml` o un archivo TypeScript del frontend?
+
+1. Si escribimos claves directamente en los archivos del pipeline (`ci.yml` o `cd.yml`), estas quedan grabadas en texto plano dentro del historial del repositorio. Cualquier persona que tenga acceso a ver el repositorio podrá leerlas sin esfuerzo.
+2. Si se pone un secreto en el código de Angular (TypeScript), este se compila y se envía directo al navegador del usuario final. Cualquier visitante podría abrir la consola del navegador (F12), revisar el código descargado y robar la credencial. Para evitar esto, las claves deben manejarse siempre en el backend o mediante variables de entorno y Secretos de GitHub.
+
+### Pregunta 12: Si un secreto real fue incluido en un commit y luego se agrega su archivo a `.gitignore`, ¿queda solucionado el problema? Explique qué acción adicional debe realizarse.
+
+No, no se soluciona. `.gitignore` solo evita que Git rastree el archivo en commits futuros. Pero como Git tiene memoria y registra todo el historial, el secreto seguirá existiendo en los commits anteriores del repositorio y cualquiera podría retroceder en el tiempo para extraerlo.
+
+Para solucionarlo, se deben realizar obligatoriamente estas dos acciones:
+1. **Rotar la credencial de inmediato:** Cambiar la contraseña o revocar el token expuesto para que la clave antigua quede inutilizable. 
+2. **Purgar el historial del repositorio:** Utilizar herramientas especializadas de limpieza para reescribir el historial de Git y eliminar por completo el archivo del pasado del repositorio antes de volver a sincronizar con GitHub.
