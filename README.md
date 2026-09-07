@@ -41,3 +41,12 @@ La etapa que falla es la de **"Ejecutar pruebas"** (`npm test`), ya que la aserc
 ### Pregunta 9: ¿Debería integrarse este Pull Request a main mientras el pipeline está fallando? Justifique.
 
 No, no se debe integrar. El pipeline actúa como un **Quality Gate** (filtro de calidad automatizado) para asegurar que el software cumpla con los estándares mínimos antes de mezclarse. Si forzamos la integración de un Pull Request mientras el pipeline está fallando, subiríamos pruebas rotas o código defectuoso directamente a `main`, lo que rompería la rama principal para todo el equipo y violaría el acuerdo de mantenerla siempre ejecutable y libre de fallos.
+
+### Pregunta 10: Clasificación de elementos
+
+* **`package.json`**: versionable
+* **`API_URL` pública**: variable/configuración
+* **`AWS_REGION`**: variable/configuración
+* **`DB_PASSWORD`**: secreto/no versionable
+* **`API_TOKEN`**: secreto/no versionable
+* **`terraform.tfstate`**: secreto/no versionable
