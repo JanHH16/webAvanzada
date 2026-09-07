@@ -15,3 +15,21 @@ Verifica que todo el código TypeScript de la aplicación de Angular compile a J
 
 ### Pregunta 4: ¿Qué utilidad tiene revisar `git status` o `git diff --cached` antes de realizar un commit?
 `git status` nos permite ver un resumen rápido de qué archivos están modificados, cuáles están preparados para el commit y cuáles no están siendo rastreados. Esto es clave para no meter por error archivos basura o secretos (como claves de API o archivos `.env.local`). Por su parte, `git diff --cached` nos muestra la comparación línea por línea del código que ya preparamos con `git add`, permitiéndonos hacer una última revisión visual antes de confirmar los cambios de forma definitiva.
+
+### Pregunta 5: ¿Qué evento activa el workflow `ci.yml`?
+El workflow se activa de forma automática cuando se crea o se actualiza un **Pull Request** (`pull_request`) que tiene como destino la rama `main`. Esto garantiza que cualquier cambio propuesto en nuestra rama de trabajo sea evaluado antes de integrarse al código definitivo.
+
+### Pregunta 6: En `runs-on: ubuntu-latest`, ¿qué representa `ubuntu-latest`?
+Representa el entorno virtual o **runner** (una máquina virtual limpia alojada por GitHub) sobre la cual se va a ejecutar nuestro job. En este caso específico, le indica a GitHub Actions que monte y corra todos los pasos del flujo de validación sobre la versión estable más reciente de Ubuntu Linux.
+
+### Pregunta 7: Ordene las etapas de validación que ejecuta el job frontend y explique por qué `npm ci` se ejecuta antes que las pruebas.
+
+El orden secuencial de las etapas que ejecuta el job es:
+1. **Obtener código** (`actions/checkout`)
+2. **Configurar Node.js** (`actions/setup-node`) 
+3. **Instalar dependencias** (`npm ci`) 
+4. **Ejecutar pruebas** (`npm test`) 
+5. **Construir Angular** (`npm run build`) 
+
+**Justificación:**
+`npm ci` se debe ejecutar antes de las pruebas porque el runner se inicializa como un entorno completamente limpio y vacío. Si intentáramos ejecutar las pruebas (`npm test`) antes de este paso, el comando fallaría de inmediato, ya que el sistema no tendría instalados los paquetes ni las dependencias necesarias para compilar y ejecutar el framework.
