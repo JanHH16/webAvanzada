@@ -12,3 +12,6 @@ Evita que el CLI de Angular cree un repositorio de Git independiente dentro de l
 
 ### Pregunta 3: ¿Qué verifica `npm run build` en esta etapa del laboratorio?
 Verifica que todo el código TypeScript de la aplicación de Angular compile a JavaScript estándar de forma exitosa, sin errores de sintaxis, tipos o importaciones rotas. Al mismo tiempo, simula el empaquetado final del software generando los archivos estáticos listos para producción en la carpeta `dist/`. Correrlo localmente nos asegura de que el build no va a romper el pipeline de CI una vez subido el código.
+
+### Pregunta 4: ¿Qué utilidad tiene revisar `git status` o `git diff --cached` antes de realizar un commit?
+`git status` nos permite ver un resumen rápido de qué archivos están modificados, cuáles están preparados para el commit y cuáles no están siendo rastreados. Esto es clave para no meter por error archivos basura o secretos (como claves de API o archivos `.env.local`). Por su parte, `git diff --cached` nos muestra la comparación línea por línea del código que ya preparamos con `git add`, permitiéndonos hacer una última revisión visual antes de confirmar los cambios de forma definitiva.
