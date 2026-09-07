@@ -63,3 +63,8 @@ No, no se soluciona. `.gitignore` solo evita que Git rastree el archivo en commi
 Para solucionarlo, se deben realizar obligatoriamente estas dos acciones:
 1. **Rotar la credencial de inmediato:** Cambiar la contraseña o revocar el token expuesto para que la clave antigua quede inutilizable. 
 2. **Purgar el historial del repositorio:** Utilizar herramientas especializadas de limpieza para reescribir el historial de Git y eliminar por completo el archivo del pasado del repositorio antes de volver a sincronizar con GitHub.
+
+### Pregunta 13: ¿Qué diferencia existe entre `terraform validate`, `terraform plan` y `terraform apply`?
+
+* Mientras que **`terraform validate`** realiza un chequeo puramente estático y local para asegurar que la sintaxis de nuestro código sea correcta sin conectarse a ningún lado, **`terraform plan`** simula el despliegue al comparar nuestro código con el estado actual en el proveedor, entregándonos una vista previa detallada de lo que se va a crear, modificar o destruir, pero sin alterar nada todavía.
+* Por su parte, **`terraform apply`** se diferencia de los dos anteriores porque no es una prueba ni una simulación, es la acción definitiva que ejecuta esos cambios de manera real en la infraestructura y actualiza el archivo de estado (`.tfstate`).
